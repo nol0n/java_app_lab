@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox prefHeight="550.0" prefWidth="600.0">
+            <children>
+                <Pane fx:id="game_field" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="500.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+                        <Rectangle fx:id="player_base" arcHeight="5.0" arcWidth="5.0" fill="#5aa7ee" height="500.0" onMouseClicked="#change_player_position" stroke="BLACK" strokeType="INSIDE" width="60.0" />
+                    </children></Pane>
+                <Pane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #E0E0E0;">
+                    <children>
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0" spacing="10.0">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#start_game" text="Начало игры" />
+                                <Button mnemonicParsing="false" onAction="#pause_game" text="Пауза" />
+                                <Button mnemonicParsing="false" onAction="#shoot" text="Выстрел" />
+                                <Button mnemonicParsing="false" onAction="#stop_game" text="Остановить игру" />
+                            </children>
+                        </HBox>
+                    </children>
+                </Pane>
+            </children>
+        </VBox>
+        <Pane prefHeight="550.0" prefWidth="200.0" style="-fx-background-color: #F0F0F0;">
+            <children>
+                <VBox prefHeight="550.0" prefWidth="200.0">
+                    <children>
+                        <Label text="счет игрока:">
+                            <font>
+                                <Font name="System Bold" size="27.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="score" text="0" />
+                        <Label text="выстрелов: ">
+                            <font>
+                                <Font name="System Bold" size="27.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="shoots" text="0" />
+                    </children>
+                    <padding>
+                        <Insets left="10.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </Pane>
+    </children>
+</HBox>
