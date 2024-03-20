@@ -3,7 +3,7 @@ package com.me.arrowgame;
 import java.util.Random;
 import java.lang.Math;
 
-public class Target implements IGameObject {
+public class _Target implements IGameObject {
     private long _id;
 
     @Override
@@ -36,7 +36,7 @@ public class Target implements IGameObject {
     private double _limit = 0.0;
 
 
-    public Target(long id, double x_coord, double y_coord, double radius, double speed, double limit, int reward) {
+    public _Target(long id, double x_coord, double y_coord, double radius, double speed, double limit, int reward) {
         _id = id;
         _direction = generateRandomInt();
         _start_y = y_coord;

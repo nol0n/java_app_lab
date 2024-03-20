@@ -4,7 +4,9 @@ module com.me.arrowgame {
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
+    requires com.google.gson;
+    requires gson.extras;
 
-    opens com.me.arrowgame to javafx.fxml;
+    opens com.me.arrowgame to javafx.fxml, com.google.gson, gson.extras;
     exports com.me.arrowgame;
 }

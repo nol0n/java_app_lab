@@ -1,9 +1,9 @@
 package com.me.arrowgame;
 
-public class Game {
-    private GameLoop _game_loop;
+public class _Game {
+    private _GameLoop _game_loop;
 
-    public Game(GameLoop game_loop) {
+    public _Game(_GameLoop game_loop) {
         _game_loop = game_loop;
     }
     private int _score;
@@ -39,7 +39,7 @@ public class Game {
         return GAME_STATE;
     }
 
-    public Game() {
+    public _Game() {
         _score = 0;
         _shoots = 0;
     }

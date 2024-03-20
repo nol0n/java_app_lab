@@ -6,14 +6,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Application extends javafx.application.Application {
+public class _Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("game-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(_Application.class.getResource("game-view.fxml"));
 
-        GameLoop game_loop = new GameLoop();
-        Controller controller = new Controller(game_loop);
-        Game game = new Game(game_loop);
+        _GameLoop game_loop = new _GameLoop();
+        _Controller controller = new _Controller(game_loop);
+        _Game game = new _Game(game_loop);
         game_loop.init(controller, game);
         fxmlLoader.setController(controller);
 

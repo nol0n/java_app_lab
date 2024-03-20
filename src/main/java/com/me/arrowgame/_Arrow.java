@@ -1,6 +1,6 @@
 package com.me.arrowgame;
 
-public class Arrow implements IGameObject {
+public class _Arrow implements IGameObject {
     public static double[] points = {-50.0, -15.0, 0.0, 0.0, -50.0, 15.0};
 
     private long _id;
@@ -28,7 +28,7 @@ public class Arrow implements IGameObject {
         return _limit;
     }
 
-    public Arrow(long id, double x_coord, double y_coord, double speed, double limit) {
+    public _Arrow(long id, double x_coord, double y_coord, double speed, double limit) {
         _id = id;
         _x_coord = x_coord;
         _y_coord = y_coord;

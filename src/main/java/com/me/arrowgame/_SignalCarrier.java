@@ -1,6 +1,6 @@
 package com.me.arrowgame;
 
-public class SignalCarrier {
+public class _SignalCarrier {
     private boolean _signal_raised  = false;
 
     public void do_wait() throws InterruptedException {

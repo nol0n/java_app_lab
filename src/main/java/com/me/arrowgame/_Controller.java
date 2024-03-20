@@ -9,14 +9,11 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.control.Label;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-
-import com.me.arrowgame.GameLoop;
 
 import java.util.HashMap;
 
-public class Controller {
-    private GameLoop _game;
+public class _Controller {
+    private _GameLoop _game;
     private HashMap<Long, Node> _game_objects = new HashMap<Long, Node>();
     @FXML
     private Pane game_field;
@@ -27,7 +24,7 @@ public class Controller {
     @FXML
     private Label shoots;
 
-    public Controller(GameLoop game) {
+    public _Controller(_GameLoop game) {
         _game = game;
     }
 

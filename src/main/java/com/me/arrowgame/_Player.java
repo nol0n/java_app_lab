@@ -1,6 +1,6 @@
 package com.me.arrowgame;
 
-public class Player implements IGameObject {
+public class _Player implements IGameObject {
     public static double[] points = {-20.0, 40.0, 20.0, 0.0, -20.0, -40.0};
     private long _id;
     @Override
@@ -24,7 +24,7 @@ public class Player implements IGameObject {
         _y_coord = y_coord;
     }
 
-    public Player(long id, double x_coord, double y_coord) {
+    public _Player(long id, double x_coord, double y_coord) {
         _id = id;
         _x_coord = x_coord;
         _y_coord = y_coord;
