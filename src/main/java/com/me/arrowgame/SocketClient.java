@@ -3,12 +3,7 @@ package com.me.arrowgame;
 import com.google.gson.Gson;
 
 import java.io.*;
-import java.lang.annotation.Target;
 import java.net.Socket;
-
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
 public class SocketClient {
     Model model = BModel.build();
@@ -17,6 +12,16 @@ public class SocketClient {
     OutputStream os;
     DataInputStream dis;
     DataOutputStream dos;
+    ConnectionState state = ConnectionState.WAITING;
+
+    private int socketId;
+    private IConnectionListener connectionLostListener;
+
+    public int getId() {
+        return socketId;
+    }
+
+    public boolean running = false;
 /*    RuntimeTypeAdapterFactory<IGameObject> gameObjectTypeFactory = RuntimeTypeAdapterFactory
             .of(IGameObject.class, "type")
             .registerSubtype(Point.class)
@@ -27,9 +32,12 @@ public class SocketClient {
     Gson gson = new Gson();
     boolean isServer = true;
 
-    public SocketClient(Socket cs, boolean isServer) {
+    public SocketClient(Socket cs, boolean isServer, int socketId,
+                        IConnectionListener listener) {
         this.cs = cs;
         this.isServer = isServer;
+        this.socketId = socketId;
+        this.connectionLostListener = listener;
         try {
             os = cs.getOutputStream();
             dos = new DataOutputStream(os);
@@ -38,9 +46,26 @@ public class SocketClient {
             System.out.println("Error SocketClient(Socket cs)");
         }
 
-        new Thread(() -> {
-            run();
-        }).start();
+        running = true;
+
+        if (isServer) {
+            if (socketId == -1) {
+                Response resp = new Response(null, "Maximum players reached. Connection refused.",
+                        responseAction.CONNECTION_REFUSED);
+                sendResponse(resp);
+            } else {
+                Response resp = new Response(null, "Connected to server",
+                        responseAction.CONNECTION_ACCEPTED);
+                sendResponse(resp);
+                new Thread(() -> {
+                    run();
+                }).start();
+            }
+        } else {
+            new Thread(() -> {
+                run();
+            }).start();
+        }
     }
 
     void run() {
@@ -51,24 +76,52 @@ public class SocketClient {
         }
         dis = new DataInputStream(is);
 
-        while (true) {
-            if (isServer) {
-                Message msg = readMessage();
-                switch (msg.getAction()) {
-                    case GET -> {
-                        Response resp = new Response(model.getObjects());
-                        sendResponse(resp);
+        while (running) {
+            try {
+                if (isServer) {
+                    Message msg = readMessage();
+                    switch (msg.getAction()) {
+                        case GET -> {
+                            Response resp = new Response(model.getObjects(), null, responseAction.UPDATE_MODEL);
+                            sendResponse(resp);
+                        }
+                        case ADD -> {
+                            for (Point pnt : msg.getObjects()) {
+                                model.add(pnt);
+                            }
+                        }
                     }
-                    case ADD -> {
-                        for (Point pnt : msg.getObjects()) {
-                            model.add(pnt);
+                } else {
+                    Response resp = readResponse();
+                    switch (resp.getAction()) {
+                        case UPDATE_MODEL -> {
+                            model.set(resp.getObjects());
+                        }
+                        case CONNECTION_ACCEPTED -> {
+                            System.out.println(resp.getMessage());
+                            state = ConnectionState.ACCEPTED;
+                        }
+                        case CONNECTION_REFUSED -> {
+                            System.out.println(resp.getMessage());
+                            state = ConnectionState.REFUSED;
+                            try {
+                                this.cs.close();
+                                running = false;
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
                         }
                     }
                 }
-            } else {
-                while (true) {
-                    Response resp = readResponse();
-                    model.set(resp.getObjects());
+            } catch (NullPointerException e) {
+                connectionLostListener.onConnectionLost(this.getId());
+                try {
+                    this.cs.close();
+                    model.removeObserver(this.getId());
+                    running = false;
+                    state = ConnectionState.WAITING;
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         }

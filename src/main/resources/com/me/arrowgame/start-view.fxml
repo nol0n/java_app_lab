@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.me.arrowgame.startController">
+   <center>
+      <Pane prefHeight="550.0" prefWidth="400.0" BorderPane.alignment="TOP_RIGHT">
+         <children>
+            <VBox alignment="CENTER" prefHeight="550.0" prefWidth="400.0" spacing="15.0">
+               <children>
+                  <TextField fx:id="name_field" maxWidth="200.0" prefWidth="200.0" promptText="введите имя" />
+                  <Button mnemonicParsing="false" onAction="#connect_to_server" text="подключиться" />
+                  <Label fx:id="info_message" />
+               </children></VBox>
+         </children>
+      </Pane>
+   </center>
+   <left>
+      <Pane prefHeight="550.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane prefHeight="550.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>
